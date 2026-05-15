@@ -114,7 +114,7 @@ MENUBAR_SIZE = int(os.environ.get("CLAUDE_MENUBAR_SIZE", "12"))
 # └─────────────────────────────────────────────────────────────────────┘
 
 DEVELOPER = "yigitaltunay"
-GITHUB = "https://github.com/yigitaltunay/claude-swiftbar"
+GITHUB = "https://github.com/yigitaltunay/claude-meter"
 
 C_GREEN = "#32D74B"
 C_AMBER = "#FFD60A"

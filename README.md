@@ -1,7 +1,7 @@
-# Claude Usage (SwiftBar)
+# Claude Meter
 
 macOS menu bar plugin for **[Claude](https://claude.ai) Pro** usage (5-hour and 7-day windows). Built for [SwiftBar](https://github.com/swiftbar/SwiftBar).  
-**Repo:** [github.com/yigitaltunay/claude-swiftbar](https://github.com/yigitaltunay/claude-swiftbar)
+**Repo:** [github.com/yigitaltunay/claude-meter](https://github.com/yigitaltunay/claude-meter)
 
 **Needs:** macOS, SwiftBar, Python 3, and `requests` (`pip install -r requirements.txt`). Configure secrets in **`.env`** and/or **`secrets.json`** next to the installed script (never commit real values).
 
@@ -40,8 +40,8 @@ defaults read com.ameba.SwiftBar PluginDirectory
 Clone the repo and install Python deps (from the repo folder):
 
 ```bash
-git clone https://github.com/yigitaltunay/claude-swiftbar.git
-cd claude-swiftbar
+git clone https://github.com/yigitaltunay/claude-meter.git
+cd claude-meter
 python3 -m pip install -r requirements.txt
 ```
 
@@ -59,6 +59,27 @@ The script copies `claude_usage.5m.py` and makes it executable. **`.env` in Plug
 | `CLAUDE_SESSION_KEY` | Cookie `sessionKey` while logged in at claude.ai |
 | `CLAUDE_ORG_ID` | UUID from `/api/organizations/<id>/usage` in DevTools → Network |
 
+### How to get `CLAUDE_SESSION_KEY` and `CLAUDE_ORG_ID`
+
+Both values come from a real request that claude.ai makes in your logged-in browser. Easiest way to capture them in one shot:
+
+1. Open [claude.ai](https://claude.ai) in your browser, logged in.
+2. Open **DevTools** (⌥⌘I on macOS / F12 elsewhere) and go to the **Network** tab. Leave it open.
+3. In the Claude UI, find the **“Last updated: just now”** label (usage panel) and click the **↻ refresh button** next to it. This fires a fresh request to `/api/organizations/<org-id>/usage`.
+4. In the Network tab, click that `usage` request.
+   - **`CLAUDE_ORG_ID`** → it is the UUID in the request URL: `/api/organizations/`**`<this-part>`**`/usage`.
+   - **`CLAUDE_SESSION_KEY`** → in the request’s **Headers** section, find **`Cookie:`** and copy the value of the `sessionKey=...` entry (stop at the next `;`). It starts with `sk-ant-sid01-...`.
+5. Paste both into your `.env` next to the installed script:
+
+   ```env
+   CLAUDE_SESSION_KEY=sk-ant-sid01-...
+   CLAUDE_ORG_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+   ```
+
+Alternative for the session key only: DevTools → **Application** → **Cookies** → `https://claude.ai` → copy the `sessionKey` value.
+
+Treat `sessionKey` like a password — it grants full access to your Claude account. Never commit it or share it. It rotates when you log out, so logging out everywhere will invalidate it.
+
 Optional tuning (env): `CLAUDE_WARNING_THRESHOLD`, `CLAUDE_CRITICAL_THRESHOLD`, `CLAUDE_BAR_WIDTH`, `CLAUDE_MENUBAR_FONT`, `CLAUDE_MENUBAR_SIZE` — see `claude_usage.py` for defaults.
 
 Refresh interval: controlled by the filename (`5m` = 5 minutes). To change it, rename the file (e.g. `claude_usage.2m.py` for 2 minutes) and re-run `./install-plugin.sh`.
@@ -67,10 +88,10 @@ Refresh interval: controlled by the filename (`5m` = 5 minutes). To change it, r
 
 ## 3. Update when this repo changes
 
-From your **local clone** of [claude-swiftbar](https://github.com/yigitaltunay/claude-swiftbar):
+From your **local clone** of [claude-meter](https://github.com/yigitaltunay/claude-meter):
 
 ```bash
-cd claude-swiftbar          # or wherever you cloned it
+cd claude-meter             # or wherever you cloned it
 git pull
 python3 -m pip install -r requirements.txt
 ```
