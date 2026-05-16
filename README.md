@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/overview.png" alt="Claude Meter dropdown showing 5-hour and 7-day usage" width="420">
+  <img width="306" height="451" alt="image" src="https://github.com/user-attachments/assets/7aa8d7d9-e726-4a3a-8d49-db7bf9f0e2dd" />
 </p>
 
 <p align="center">
