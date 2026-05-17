@@ -109,7 +109,7 @@ ORG_ID = os.environ.get("CLAUDE_ORG_ID", "").strip()
 WARNING_THRESHOLD = int(os.environ.get("CLAUDE_WARNING_THRESHOLD", "50"))
 CRITICAL_THRESHOLD = int(os.environ.get("CLAUDE_CRITICAL_THRESHOLD", "85"))
 BAR_WIDTH = int(os.environ.get("CLAUDE_BAR_WIDTH", "20"))
-MENUBAR_FONT = os.environ.get("CLAUDE_MENUBAR_FONT", "Menlo-Bold")
+MENUBAR_FONT = os.environ.get("CLAUDE_MENUBAR_FONT", "SF Mono")
 MENUBAR_SIZE = int(os.environ.get("CLAUDE_MENUBAR_SIZE", "12"))
 # └─────────────────────────────────────────────────────────────────────┘
 
