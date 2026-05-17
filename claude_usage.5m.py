@@ -116,12 +116,18 @@ MENUBAR_SIZE = int(os.environ.get("CLAUDE_MENUBAR_SIZE", "12"))
 DEVELOPER = "yigitaltunay"
 GITHUB = "https://github.com/yigitaltunay/claude-meter"
 
-C_GREEN = "#32D74B"
-C_AMBER = "#FFD60A"
-C_RED = "#FF453A"
-C_PURPLE = "#BF5AF2"
-C_BLUE = "#0A84FF"
-C_GRAY = "#8E8E93"
+# Menubar pill — vivid for wallpaper-vibrancy background
+MB_GREEN = "#34C759,#32D74B"
+MB_AMBER = "#FF9500,#FFD60A"
+MB_RED = "#FF3B30,#FF453A"
+
+# Dropdown — WCAG-compliant on near-white menu background
+C_GREEN = "#1B7E37,#32D74B"
+C_AMBER = "#B25000,#FFD60A"
+C_RED = "#B8001C,#FF453A"
+C_PURPLE = "#7028A0,#BF5AF2"
+C_BLUE = "#0040DD,#0A84FF"
+C_GRAY = "#52525B,#8E8E93"
 
 
 def tier(val):
@@ -135,6 +141,11 @@ def tier(val):
 def color(val):
     t = tier(val)
     return C_GREEN if t == "green" else C_AMBER if t == "amber" else C_RED
+
+
+def menubar_color(val):
+    t = tier(val)
+    return MB_GREEN if t == "green" else MB_AMBER if t == "amber" else MB_RED
 
 
 def badge(val):
@@ -199,7 +210,7 @@ def get_claude_usage():
             s_reset = format_reset_time(s_data.get("resets_at"), "relative")
             w_reset = format_reset_time(w_data.get("resets_at"), "absolute")
 
-            print(f"Claude {pct_label(s)}| font={MENUBAR_FONT} size={MENUBAR_SIZE} color={sc}")
+            print(f"Claude {pct_label(s)}| font={MENUBAR_FONT} size={MENUBAR_SIZE} color={menubar_color(s)}")
             print("---")
 
             print(f"  SESSION (5H)                    {badge(s)} | font=Menlo-Bold size=11 color={sc}")
